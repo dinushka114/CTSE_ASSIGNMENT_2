@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 const CustomerRepository = require("../database/repository/customer.repository");
 
 class CustomerServise {
@@ -41,7 +41,7 @@ class CustomerServise {
         if (isMatch) {
           let token = jwt.sign(
             {
-              id:existingCustomer._id,
+              id: existingCustomer._id,
               name: existingCustomer.name,
               email: existingCustomer.email,
             },
@@ -50,7 +50,7 @@ class CustomerServise {
           );
 
           let result = {
-            id:existingCustomer._id,
+            id: existingCustomer._id,
             name: existingCustomer.name,
             email: existingCustomer.email,
             token: `Bearer ${token}`,
@@ -58,13 +58,43 @@ class CustomerServise {
           };
 
           return { success: true, message: result };
-
-        }else{
-            return { success: false, message: "Incorrect Password" };
+        } else {
+          return { success: false, message: "Incorrect Password" };
         }
       }
     } catch (error) {
       throw error;
+    }
+  }
+
+  async VerifyToken(channel,token) {
+    let currentUser = null;
+    try {
+      const decoded = jwt.verify(token, process.env.APP_SECRET);
+      currentUser = decoded;
+      return { success: true, message: "Token is valid" };
+  } catch (err) {
+      return { success: false, message: "Token is invalid" };
+  }
+
+
+
+
+  }
+
+  async SubscribeEvents(channel,payload) {
+
+    let p = JSON.parse(payload)
+
+    const {event , data } = p;
+
+    switch (event) {
+      case "VERIFY_TOKEN":
+        this.VerifyToken(channel,data);
+        break;
+
+      default:
+        break;
     }
   }
 }

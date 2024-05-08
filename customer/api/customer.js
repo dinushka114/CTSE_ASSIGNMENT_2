@@ -1,7 +1,10 @@
-const CustomerServise = require("../services/customer.service")
+const CustomerServise = require("../services/customer.service");
+// const { SubscribeMessage } = require("../utils");
 
-module.exports = (app) => {
+module.exports = (app, channel) => {
     const service = new CustomerServise();
+
+    // SubscribeMessage(channel, service)
 
     app.post("/signup", async(req,res)=>{
         const {name, email, password} = req.body;
