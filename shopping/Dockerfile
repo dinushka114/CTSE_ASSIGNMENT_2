@@ -1,6 +1,6 @@
 FROM node
 
-WORKDIR /app/shpping
+WORKDIR /app/shopping
 
 COPY package.json .
 
