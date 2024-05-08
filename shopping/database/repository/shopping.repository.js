@@ -1,4 +1,5 @@
 const Cart = require("../models/Cart");
+const Order = require("../models/Order");
 class ShoppingRepository {
   async FindCart(userId) {
     let cart = await Cart.findOne({ customerId:userId });
@@ -35,7 +36,15 @@ class ShoppingRepository {
     return cart;
   }
 
-  async PlaceOrder(){
+  async PlaceOrder(response){
+
+      let items = [];
+
+      response.cart.items.map(item=>{
+        items.push(item.name);
+      })
+
+      console.log(items+"ITEMSSSSSSSSSSSSSSSSSSSSSSSSSS")
     
   }
 }

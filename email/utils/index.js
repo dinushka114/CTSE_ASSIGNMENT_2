@@ -26,11 +26,11 @@ module.exports.PublishMessage=async(channel, binding_key, message)=>{
 
 module.exports.SubscribeMessage = async (channel, service)=>{
     const appQueue = await channel.assertQueue(process.env.QUEUE_NAME);
-    channel.bindQueue(appQueue.queue,process.env.EXCHANGE_NAME, process.env.SHOPPING_BINDING_KEY)
+    channel.bindQueue(appQueue.queue,process.env.EXCHANGE_NAME, process.env.EMAIL_BINDING_KEY)
     channel.consume(appQueue.queue, data=>{
         console.log("Received data")
         console.log(data.content.toString())    
-        // service.SubscribeEvents(data.content.toString())
+        service.SubscribeEvents(data.content.toString())
         channel.ack(data)
     })
 }

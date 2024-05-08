@@ -24,6 +24,17 @@ class ShoppingService {
     }
   }
 
+  async NewOrder(response){
+      let newOrder = await this.repository.PlaceOrder(response);
+
+      if (newOrder) {
+        return { success: true, newOrder };
+      } else {
+        return { success: false, newOrder:null };
+      }
+
+  }
+
   async SubscribeEvents(payload) {
     const p = JSON.parse(payload);
 

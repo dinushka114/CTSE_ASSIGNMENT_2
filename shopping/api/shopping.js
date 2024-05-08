@@ -1,8 +1,9 @@
-const { extractUserId } = require("../middlewares");
+const { extractUserId, extractUserEmail } = require("../middlewares");
 const ShoppingService = require("../services/shopping.service");
+const { PublishMessage } = require("../utils");
 require("dotenv").config();
 
-module.exports = (app) => {
+module.exports = (app, channel) => {
   const service = new ShoppingService();
 
   app.post("/", async (req, res) => {
@@ -41,4 +42,31 @@ module.exports = (app) => {
         return res.status(403).json({ error: "Invalid" });
     }
   });
+
+
+  app.post("/order", async(req,res)=>{
+    let userId = extractUserId(req, res);
+    let userEmail = extractUserEmail(req,res);
+    if (userId && userEmail) {
+        try {
+          const response = await service.GetCart(userId);
+
+          const newOrder = await service.NewOrder(response);
+
+          let payload = {
+            data:userEmail,
+            event:'SEND_EMAIL'
+          }
+        
+          PublishMessage(channel, process.env.EMAIL_BINDING_KEY, JSON.stringify(payload))
+
+        } catch (error) {
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+      }else{
+          return res.status(403).json({ error: "Invalid" });
+      }
+
+  })
+
 };

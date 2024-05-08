@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { email } = require("./api");
 
-module.exports = async (app) => {
+module.exports = async (app,channel) => {
   app.use(cors());
   app.use(express.json());
   app.use(
@@ -11,7 +11,7 @@ module.exports = async (app) => {
     })
   );
 
-  email(app);
+  email(app,channel);
   
 
 

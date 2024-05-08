@@ -1,7 +1,9 @@
 var nodemailer = require("nodemailer");
 
 class EmailService {
+
   async sendEmail(to) {
+
     return new Promise((resolve, reject) => {
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -26,6 +28,23 @@ class EmailService {
         }
       });
     });
+  }
+
+
+  async SubscribeEvents(payload){
+
+    let p = JSON.parse(payload);
+
+    let {event, data} = p;
+
+    switch (event) {
+      case "SEND_EMAIL":
+        await this.sendEmail(data)
+        break;
+    
+      default:
+        break;
+    }
   }
 }
 
