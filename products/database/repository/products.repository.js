@@ -1,6 +1,20 @@
 const Product = require("../models/Product");
 
 class ProductsRepository {
+
+
+  async GetProducts(){
+    try {
+      
+      let products = await Product.find();
+
+      return products;
+
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async CreateProduct({ name, desc, banner, type, unit, price }) {
     try {
       const newProduct = new Product({

@@ -51,7 +51,7 @@ module.exports = (app, channel) => {
         try {
           const response = await service.GetCart(userId);
 
-          const newOrder = await service.NewOrder(response);
+          // const newOrder = await service.NewOrder(response);
 
           let payload = {
             data:userEmail,
@@ -61,7 +61,7 @@ module.exports = (app, channel) => {
           PublishMessage(channel, process.env.EMAIL_BINDING_KEY, JSON.stringify(payload))
 
         } catch (error) {
-          return res.status(500).json({ error: "Internal Server Error" });
+          return res.status(500).json({ error });
         }
       }else{
           return res.status(403).json({ error: "Invalid" });

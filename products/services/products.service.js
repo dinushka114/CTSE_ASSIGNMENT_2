@@ -5,6 +5,21 @@ class ProductService{
         this.repository = new ProductsRepository();
     }
 
+    async GetProducts(){
+        try {
+            let products = await this.repository.GetProducts();
+
+            if(products){
+                return { success: true, products };
+            }else{
+                return { success: false, products:null };
+            }
+
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async AddNewProduct(userInputs){
         try{
 
