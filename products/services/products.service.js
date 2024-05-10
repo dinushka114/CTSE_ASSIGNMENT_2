@@ -1,5 +1,6 @@
 const ProductsRepository = require("../database/repository/products.repository");
 
+// Product Service APIs
 class ProductService{
     constructor(){
         this.repository = new ProductsRepository();

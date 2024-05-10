@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-
+// Product Repository
 class ProductsRepository {
 
 

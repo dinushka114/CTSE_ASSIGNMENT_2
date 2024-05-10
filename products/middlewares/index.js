@@ -1,3 +1,4 @@
+// Middelwera of product service
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
