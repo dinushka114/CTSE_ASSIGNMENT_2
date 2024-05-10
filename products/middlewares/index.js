@@ -2,6 +2,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
+// User Auth of product Service
 const userAuth = (req, res, next) => {
     const authHeader = req.headers["authorization"];
     if (!authHeader) return res.sendStatus(403);
